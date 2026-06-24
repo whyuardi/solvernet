@@ -73,13 +73,14 @@ export default function Home() {
   return (
     <main className="flex-1">
       {/* ─── Hero ─── */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <ClientHero />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--bg-primary)]/60 to-[var(--bg-primary)] z-[1]" />
 
-        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
+        {/* Centered content */}
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto pt-20 pb-48 sm:pb-44">
           <div className="mb-4 inline-flex items-center gap-1.5 glass-card px-3 py-1.5 text-xs text-[var(--accent)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
             Mainnet Beta Live
@@ -108,14 +109,16 @@ export default function Home() {
             </a>
           </div>
 
-          {/* Stats */}
-          <ClientLanding stats={STATS} />
-
           {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[var(--text-muted)]">
+          <div className="absolute bottom-36 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[var(--text-muted)]">
             <span className="text-[10px] uppercase tracking-widest">Scroll</span>
             <ArrowDown size={14} className="animate-bounce" />
           </div>
+        </div>
+
+        {/* Stats — pinned at bottom, never overlaps heading */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 pb-8 sm:pb-10">
+          <ClientLanding stats={STATS} />
         </div>
       </section>
 

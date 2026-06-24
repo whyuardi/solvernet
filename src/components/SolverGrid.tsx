@@ -310,14 +310,14 @@ export default function SolverGrid() {
   return (
     <div>
       {/* Toolbar */}
-      <div className="flex items-center justify-between mb-5">
-        <h2 className="text-lg font-semibold">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-3">
+        <h2 className="text-base sm:text-lg font-semibold">
           Competing Solvers{' '}
-          <span className="text-sm font-normal text-[var(--text-secondary)]">
+          <span className="text-xs sm:text-sm font-normal text-[var(--text-secondary)]">
             ({sorted.filter((s) => s.isActive).length} active)
           </span>
         </h2>
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 flex-wrap">
           {(['bid', 'reputation', 'speed'] as SortKey[]).map((key) => (
             <button
               key={key}

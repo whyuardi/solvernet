@@ -47,12 +47,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
@@ -65,22 +63,22 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "glass-strong shadow-[0_1px_0_rgba(255,255,255,0.05)]"
+          ? "bg-[var(--bg-primary)]/95 border-b border-[var(--border)]"
           : "bg-transparent"
       )}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 group"
+          className="flex items-center gap-2 group"
           aria-label="SolverNet Home"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 ring-1 ring-accent/20 transition-all duration-300 group-hover:bg-accent/20 group-hover:ring-accent/40">
-            <Network className="h-5 w-5 text-accent" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--accent-dim)] border border-[rgba(180,255,57,0.12)] transition-colors group-hover:border-[rgba(180,255,57,0.3)]">
+            <Network className="h-4 w-4 text-[var(--accent)]" />
           </div>
-          <span className="text-lg font-semibold tracking-tight text-white">
-            Solv<span className="text-accent">Net</span>
+          <span className="text-base font-bold tracking-tight text-white">
+            Solv<span className="text-[var(--accent)]">Net</span>
           </span>
         </Link>
 
@@ -100,44 +98,37 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "relative rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200",
+                    "relative rounded-[var(--radius-sm)] px-3 py-1.5 text-sm font-medium transition-colors duration-200",
                     isActive
-                      ? "text-white"
-                      : "text-zinc-400 hover:text-zinc-200"
+                      ? "text-[var(--accent)]"
+                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   )}
                 >
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-active-pill"
-                      className="absolute inset-0 rounded-lg bg-white/10"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10">{link.label}</span>
+                  {link.label}
                 </Link>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Right: Wallet Button + Mobile Toggle */}
+        {/* Right */}
         <div className="flex items-center gap-3">
           <button
             disabled
-            className="hidden h-9 items-center gap-2 rounded-lg border border-zinc-700/50 bg-zinc-800/40 px-4 text-sm font-medium text-zinc-400 transition-colors hover:border-zinc-600 hover:text-zinc-300 sm:flex cursor-not-allowed opacity-60"
+            className="hidden h-8 items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--border)] bg-transparent px-3 text-xs font-medium text-[var(--text-secondary)] cursor-not-allowed opacity-50 sm:flex"
             aria-label="Connect Wallet"
           >
-            <Wallet className="h-4 w-4" />
+            <Wallet className="h-3.5 w-3.5" />
             <span>Connect Wallet</span>
           </button>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="relative z-50 flex h-9 w-9 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800/60 hover:text-white md:hidden"
+            className="relative z-50 flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] md:hidden"
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </div>
       </nav>
@@ -146,25 +137,23 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-black/60 md:hidden"
               onClick={() => setIsOpen(false)}
             />
 
-            {/* Drawer */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 35 }}
-              className="fixed inset-y-0 right-0 z-40 w-72 border-l border-zinc-800/60 bg-zinc-900/95 backdrop-blur-2xl md:hidden"
+              className="fixed inset-y-0 right-0 z-40 w-64 border-l border-[var(--border)] bg-[var(--bg-primary)] md:hidden"
             >
-              <div className="flex flex-col gap-1 px-6 pt-24">
+              <div className="flex flex-col gap-1 px-5 pt-20">
                 {navLinks.map((link, i) => {
                   const isActive =
                     pathname === link.href ||
@@ -181,10 +170,10 @@ export default function Navbar() {
                         href={link.href}
                         onClick={() => setIsOpen(false)}
                         className={cn(
-                          "flex items-center rounded-lg px-4 py-3 text-base font-medium transition-colors",
+                          "flex items-center rounded-[var(--radius-sm)] px-3 py-2.5 text-sm font-medium transition-colors",
                           isActive
-                            ? "bg-white/10 text-white"
-                            : "text-zinc-400 hover:bg-white/5 hover:text-zinc-200"
+                            ? "bg-[var(--accent-dim)] text-[var(--accent)]"
+                            : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]"
                         )}
                       >
                         {link.label}
@@ -193,19 +182,18 @@ export default function Navbar() {
                   );
                 })}
 
-                {/* Mobile Wallet Button */}
                 <motion.div
                   custom={navLinks.length}
                   initial="hidden"
                   animate="visible"
                   variants={mobileItemVariants}
-                  className="mt-4 border-t border-zinc-800/60 pt-4"
+                  className="mt-4 border-t border-[var(--border)] pt-4"
                 >
                   <button
                     disabled
-                    className="flex w-full items-center gap-3 rounded-lg border border-zinc-700/50 bg-zinc-800/40 px-4 py-3 text-base font-medium text-zinc-400 cursor-not-allowed opacity-60"
+                    className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--border)] bg-transparent px-3 py-2.5 text-sm font-medium text-[var(--text-secondary)] cursor-not-allowed opacity-50"
                   >
-                    <Wallet className="h-5 w-5" />
+                    <Wallet className="h-4 w-4" />
                     <span>Connect Wallet</span>
                   </button>
                 </motion.div>

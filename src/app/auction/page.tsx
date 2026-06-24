@@ -83,20 +83,20 @@ export default function AuctionPage() {
     <div className="flex-1">
       {/* Header */}
       <header className="border-b border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <a
               href="/dashboard"
-              className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors shrink-0"
             >
               &larr; Dashboard
             </a>
-            <span className="text-[var(--text-muted)]">/</span>
-            <h1 className="text-sm font-semibold font-mono text-[var(--accent)]">
+            <span className="text-[var(--text-muted)] hidden sm:inline">/</span>
+            <h1 className="text-sm font-semibold font-mono text-[var(--accent)] truncate hidden sm:block">
               {INTENT_DETAILS.id}
             </h1>
           </div>
-          <span className="text-[10px] font-medium px-2 py-0.5 rounded-[var(--radius-full)] bg-[var(--accent)]/10 text-[var(--accent)]">
+          <span className="text-[10px] font-medium px-2 py-0.5 rounded-[var(--radius-full)] bg-[var(--accent)]/10 text-[var(--accent)] shrink-0">
             Active Auction
           </span>
         </div>
@@ -108,9 +108,9 @@ export default function AuctionPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Intent Details Panel */}
             <div className="glass-card p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-semibold">Intent Details</h2>
-                <span className="text-[10px] text-[var(--text-muted)] font-mono">
+              <div className="flex items-center justify-between mb-4 gap-2">
+                <h2 className="text-sm font-semibold shrink-0">Intent Details</h2>
+                <span className="text-[10px] text-[var(--text-muted)] font-mono truncate hidden sm:block">
                   {INTENT_DETAILS.id}
                 </span>
               </div>
@@ -152,15 +152,15 @@ export default function AuctionPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border)]">
-                <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+              <div className="flex flex-wrap items-center justify-between mt-4 pt-4 border-t border-[var(--border)] gap-3">
+                <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] shrink-0">
                   <Clock size={12} />
                   <span>Deadline: </span>
                   <span className="font-mono text-[var(--text-primary)]">
                     {formatTime(timeRemaining)}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+                <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] shrink-0">
                   <Zap size={12} />
                   <span>Output: </span>
                   <span className="font-mono text-[var(--text-primary)]">

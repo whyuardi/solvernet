@@ -145,16 +145,17 @@ export default function DashboardPage() {
     <div className="flex-1">
       {/* Header */}
       <header className="border-b border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <h1 className="text-lg font-bold">Dashboard</h1>
             <span className="text-[10px] text-[var(--text-muted)] bg-[var(--bg-secondary)] px-2 py-0.5 rounded-[var(--radius-full)]">
               Live
             </span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+          <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] shrink-0">
             <Activity size={12} className="text-[var(--success)]" />
-            All systems operational
+            <span className="hidden sm:inline">All systems operational</span>
+            <span className="sm:hidden">OK</span>
           </div>
         </div>
       </header>
@@ -192,7 +193,7 @@ export default function DashboardPage() {
         </div>
 
         {/* ── Filters ── */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 overflow-x-auto">
           <Filter size={14} className="text-[var(--text-muted)]" />
           <select
             value={chainFilter}
@@ -235,7 +236,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left: Live Activity Feed */}
           <div className="lg:col-span-2">
-            <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+            <h2 className="text-sm sm:text-base font-semibold mb-3 flex items-center gap-2">
               <Activity size={14} className="text-[var(--accent)]" />
               Live Activity
             </h2>
@@ -269,7 +270,7 @@ export default function DashboardPage() {
                     <div className="flex items-center gap-3 shrink-0">
                       <StatusBadge status={intent.status} />
                       {intent.fillPrice && (
-                        <span className="text-[10px] font-mono text-[var(--text-secondary)]">
+                        <span className="text-[10px] font-mono text-[var(--text-secondary)] hidden sm:inline">
                           {intent.fillPrice} ETH
                         </span>
                       )}
@@ -283,7 +284,7 @@ export default function DashboardPage() {
 
           {/* Right: Top Solvers Leaderboard */}
           <div>
-            <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+            <h2 className="text-sm sm:text-base font-semibold mb-3 flex items-center gap-2">
               <Users size={14} className="text-[var(--accent)]" />
               Top Solvers
             </h2>
@@ -323,7 +324,7 @@ export default function DashboardPage() {
 
         {/* ── Recent Transactions ── */}
         <div>
-          <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+          <h2 className="text-sm sm:text-base font-semibold mb-3 flex items-center gap-2">
             <CheckCircle2 size={14} className="text-[var(--success)]" />
             Recent Transactions
           </h2>
@@ -332,12 +333,12 @@ export default function DashboardPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-[var(--border)] text-[9px] uppercase tracking-wider text-[var(--text-muted)]">
-                    <th className="text-left px-4 py-2.5 font-medium">Intent</th>
-                    <th className="text-left px-4 py-2.5 font-medium">Solver</th>
-                    <th className="text-left px-4 py-2.5 font-medium">Route</th>
-                    <th className="text-right px-4 py-2.5 font-medium">Amount</th>
-                    <th className="text-right px-4 py-2.5 font-medium">Fill Price</th>
-                    <th className="text-right px-4 py-2.5 font-medium">Time</th>
+                    <th className="text-left px-3 sm:px-4 py-2.5 font-medium">Intent</th>
+                    <th className="text-left px-3 sm:px-4 py-2.5 font-medium hidden sm:table-cell">Solver</th>
+                    <th className="text-left px-3 sm:px-4 py-2.5 font-medium hidden md:table-cell">Route</th>
+                    <th className="text-right px-3 sm:px-4 py-2.5 font-medium">Amount</th>
+                    <th className="text-right px-3 sm:px-4 py-2.5 font-medium hidden sm:table-cell">Fill Price</th>
+                    <th className="text-right px-3 sm:px-4 py-2.5 font-medium">Time</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[var(--border)]">
@@ -349,16 +350,16 @@ export default function DashboardPage() {
                       transition={{ delay: i * 0.03 }}
                       className="hover:bg-[rgba(255,255,255,0.02)] transition-colors"
                     >
-                      <td className="px-4 py-3 font-mono text-xs text-[var(--accent)]">{tx.intentId}</td>
-                      <td className="px-4 py-3">{tx.solver}</td>
-                      <td className="px-4 py-3 text-xs text-[var(--text-secondary)]">{tx.chain}</td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className="px-3 sm:px-4 py-3 font-mono text-xs text-[var(--accent)]">{tx.intentId}</td>
+                      <td className="px-3 sm:px-4 py-3 hidden sm:table-cell">{tx.solver}</td>
+                      <td className="px-3 sm:px-4 py-3 text-xs text-[var(--text-secondary)] hidden md:table-cell">{tx.chain}</td>
+                      <td className="px-3 sm:px-4 py-3 text-right font-mono text-xs sm:text-sm">
                         {tx.amount} {tx.inputToken}
                       </td>
-                      <td className="px-4 py-3 text-right font-mono text-[var(--accent)]">
+                      <td className="px-3 sm:px-4 py-3 text-right font-mono text-[var(--accent)] hidden sm:table-cell">
                         {tx.fillPrice} ETH
                       </td>
-                      <td className="px-4 py-3 text-right text-xs text-[var(--text-muted)]">
+                      <td className="px-3 sm:px-4 py-3 text-right text-xs text-[var(--text-muted)]">
                         {tx.timestamp}
                       </td>
                     </motion.tr>

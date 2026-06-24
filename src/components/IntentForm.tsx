@@ -252,8 +252,8 @@ export default function IntentForm() {
   /* ─── Render ───────────────────────────────────────────── */
 
   return (
-    <div className="w-full max-w-lg mx-auto">
-      <div className="glass-card p-5 sm:p-6 md:p-8">
+    <div className="w-full">
+      <div className="card p-5 sm:p-6 md:p-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-[var(--text-primary)]">New Intent</h2>
@@ -279,7 +279,7 @@ export default function IntentForm() {
               <p className="text-sm text-[var(--text-secondary)] mb-4">
                 Solvers are now competing for your order
               </p>
-              <div className="glass-card px-4 py-2.5 mb-6 text-sm font-mono text-[var(--accent)]">
+              <div className="card px-4 py-2.5 mb-6 text-sm font-mono text-[var(--accent)]">
                 {intentId}
               </div>
               <div className="grid grid-cols-2 gap-3 w-full mb-6 text-left">
@@ -317,7 +317,7 @@ export default function IntentForm() {
             >
               {/* From / To Chains */}
               <div className="relative mb-5">
-                <div className="grid grid-cols-[1fr,auto,1fr] gap-2 items-end">
+                <div className="grid grid-cols-[1fr,auto,1fr] gap-1.5 sm:gap-2 items-end">
                   <Selector<ChainId>
                     label="From Chain"
                     options={CHAINS.map((c) => ({ value: c.id, label: c.name }))}
@@ -328,10 +328,10 @@ export default function IntentForm() {
                   <button
                     type="button"
                     onClick={swapChains}
-                    className="mb-0.5 p-2 rounded-full bg-[var(--bg-secondary)] border border-[var(--border)] hover:border-[var(--accent)] transition-colors cursor-pointer"
+                    className="mb-0.5 p-1.5 sm:p-2 rounded-full bg-[var(--bg-secondary)] border border-[var(--border)] hover:border-[var(--accent)] transition-colors cursor-pointer"
                     title="Swap chains"
                   >
-                    <ArrowLeftRight size={14} className="text-[var(--text-secondary)]" />
+                    <ArrowLeftRight size={12} className="text-[var(--text-secondary)] sm:!size-[14px]" />
                   </button>
                   <Selector<ChainId>
                     label="To Chain"
@@ -444,7 +444,7 @@ export default function IntentForm() {
                     Deadline
                   </label>
                 </div>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {DEADLINE_OPTIONS.map((opt) => (
                     <button
                       key={opt.value}

@@ -64,33 +64,43 @@ export default function ClientLanding({ stats }: StatsProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5, duration: 0.6 }}
-      className="flex flex-wrap items-center justify-center gap-6 mt-8"
+      className="flex items-stretch border-t border-[var(--border)]"
     >
-      <div className="glass-card px-5 py-3 text-center min-w-[130px]">
-        <div className="text-[9px] uppercase tracking-widest text-[var(--text-muted)] mb-1 flex items-center justify-center gap-1">
-          <DollarSign size={10} />
-          Total Value Settled
+      <div className="flex flex-1 items-center justify-center gap-6 sm:gap-10 px-4 py-4 sm:py-5">
+        <div className="text-center">
+          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-1 flex items-center justify-center gap-1 font-[var(--font-mono)]">
+            <DollarSign size={10} />
+            <span className="hidden sm:inline">Total Value Settled</span>
+            <span className="sm:hidden">TVS</span>
+          </div>
+          <div className="text-lg sm:text-xl font-bold font-[var(--font-mono)] text-[var(--accent)]">
+            $<AnimatedCounter end={stats.totalValueSettled / 1_000_000} suffix="M" decimals={1} />
+          </div>
         </div>
-        <div className="text-lg font-bold font-mono text-[var(--accent)]">
-          $<AnimatedCounter end={stats.totalValueSettled / 1_000_000} suffix="M" decimals={1} />
+
+        <div className="w-px h-8 bg-[var(--border)]" />
+
+        <div className="text-center">
+          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-1 flex items-center justify-center gap-1 font-[var(--font-mono)]">
+            <Users size={10} />
+            <span className="hidden sm:inline">Active Solvers</span>
+            <span className="sm:hidden">Solvers</span>
+          </div>
+          <div className="text-lg sm:text-xl font-bold font-[var(--font-mono)]">
+            <AnimatedCounter end={stats.activeSolvers} />
+          </div>
         </div>
-      </div>
-      <div className="glass-card px-5 py-3 text-center min-w-[110px]">
-        <div className="text-[9px] uppercase tracking-widest text-[var(--text-muted)] mb-1 flex items-center justify-center gap-1">
-          <Users size={10} />
-          Active Solvers
-        </div>
-        <div className="text-lg font-bold font-mono">
-          <AnimatedCounter end={stats.activeSolvers} />
-        </div>
-      </div>
-      <div className="glass-card px-5 py-3 text-center min-w-[110px]">
-        <div className="text-[9px] uppercase tracking-widest text-[var(--text-muted)] mb-1 flex items-center justify-center gap-1">
-          <Globe size={10} />
-          Chains
-        </div>
-        <div className="text-lg font-bold font-mono">
-          <AnimatedCounter end={stats.chainsSupported} />
+
+        <div className="w-px h-8 bg-[var(--border)]" />
+
+        <div className="text-center">
+          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-1 flex items-center justify-center gap-1 font-[var(--font-mono)]">
+            <Globe size={10} />
+            Chains
+          </div>
+          <div className="text-lg sm:text-xl font-bold font-[var(--font-mono)]">
+            <AnimatedCounter end={stats.chainsSupported} />
+          </div>
         </div>
       </div>
     </motion.div>

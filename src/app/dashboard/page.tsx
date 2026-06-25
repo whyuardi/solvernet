@@ -157,7 +157,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
-              className="glass-card p-4"
+              className="card p-4"
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">
@@ -230,7 +230,7 @@ export default function DashboardPage() {
             </h2>
             <div className="space-y-1.5">
               {filteredIntents.length === 0 ? (
-                <div className="glass-card p-6 text-center text-sm text-[var(--text-muted)]">
+                <div className="card p-6 text-center text-sm text-[var(--text-muted)]">
                   No intents match your filters
                 </div>
               ) : (
@@ -240,7 +240,7 @@ export default function DashboardPage() {
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.04 }}
-                    className="glass-card px-4 py-3 flex items-center justify-between gap-3 hover:border-[var(--border-hover)] transition-colors"
+                    className="card px-4 py-3 flex items-center justify-between gap-3 hover:border-[var(--border-hover)] transition-colors"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="w-8 h-8 rounded-full bg-[var(--bg-secondary)] flex items-center justify-center text-[10px] font-bold text-[var(--text-secondary)] shrink-0">
@@ -276,7 +276,7 @@ export default function DashboardPage() {
               <span className="text-sm text-[var(--accent)]">✦</span>
               Top Solvers
             </h2>
-            <div className="glass-card overflow-hidden">
+            <div className="card overflow-hidden">
               {/* Table header */}
               <div className="grid grid-cols-[24px,1fr,60px] gap-2 px-4 py-2 text-[9px] uppercase tracking-wider text-[var(--text-muted)] border-b border-[var(--border)]">
                 <span>#</span>
@@ -316,7 +316,7 @@ export default function DashboardPage() {
             <span className="text-sm text-[var(--success)]">✓</span>
             Recent Transactions
           </h2>
-          <div className="glass-card overflow-hidden">
+          <div className="card overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>

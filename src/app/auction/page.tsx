@@ -97,7 +97,7 @@ export default function AuctionPage() {
           {/* ── Left Column: Intent Details + Chart ── */}
           <div className="lg:col-span-2 space-y-6">
             {/* Intent Details Panel */}
-            <div className="glass-card p-5">
+            <div className="card p-5">
               <div className="flex items-center justify-between mb-4 gap-2">
                 <h2 className="text-sm font-semibold shrink-0">Intent Details</h2>
                 <span className="text-[10px] text-[var(--text-muted)] font-mono truncate hidden sm:block">
@@ -167,7 +167,7 @@ export default function AuctionPage() {
           {/* ── Right Column: Solver Bidding + History ── */}
           <div className="space-y-6">
             {/* Active Bidding */}
-            <div className="glass-card p-5">
+            <div className="card p-5">
               <h2 className="text-sm font-semibold mb-3 flex items-center gap-2">
                 <span className="text-sm text-[var(--accent)]">↓</span>
                 Active Bids
@@ -237,7 +237,7 @@ export default function AuctionPage() {
             </div>
 
             {/* Bid History Log */}
-            <div className="glass-card p-5">
+            <div className="card p-5">
               <h2 className="text-sm font-semibold mb-3 flex items-center gap-2">
                 <span className="text-sm text-[var(--text-muted)]">⏱</span>
                 Bid History
@@ -268,7 +268,7 @@ export default function AuctionPage() {
             </div>
 
             {/* Auction Info */}
-            <div className="glass-card p-4">
+            <div className="card p-4">
               <div className="flex items-start gap-3">
                 <span className="text-sm text-[var(--accent)] shrink-0 mt-0.5">!</span>
                 <div>

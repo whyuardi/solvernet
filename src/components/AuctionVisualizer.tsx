@@ -190,7 +190,7 @@ export default function AuctionVisualizer({
   }, [auction.bids])
 
   return (
-    <div className="glass-card p-4 sm:p-6">
+    <div className="card p-4 sm:p-6">
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
         <div>

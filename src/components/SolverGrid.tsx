@@ -165,7 +165,7 @@ function SolverCard({
       } ${index === 5 ? 'sm:col-span-2' : ''} ${index === 2 ? 'sm:row-span-2' : ''}`}
     >
       <div
-        className={`glass-card p-4 h-full transition-all duration-300 ${
+        className={`card p-4 h-full transition-all duration-300 ${
           isBestBid
             ? 'border-[var(--accent)] animate-pulse-glow'
             : 'hover:border-[var(--border-hover)]'

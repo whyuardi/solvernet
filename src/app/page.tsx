@@ -3,7 +3,7 @@ import ClientHero from './client-hero'
 
 export default function Home() {
   return (
-    <main className="flex-1">
+    <>
 
       {/* ─── Hero ─── */}
       <section className="relative min-h-[90dvh] flex items-center overflow-hidden border-b border-[var(--border)]">
@@ -41,7 +41,7 @@ export default function Home() {
             </div>
 
             {/* Stats inline */}
-            <div className="flex gap-8 mt-12 pt-8 border-t border-[var(--border)]">
+            <div className="flex gap-4 sm:gap-8 mt-12 pt-8 border-t border-[var(--border)]">
               <div>
                 <div className="text-2xl font-bold font-[var(--font-mono)] text-[var(--accent)]">$142M+</div>
                 <div className="text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mt-1 font-[var(--font-mono)]">TVS</div>
@@ -176,6 +176,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </main>
+    </>
   )
 }

@@ -2,6 +2,8 @@
 
 import { useState, useCallback, FormEvent } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { createIntent, startAuction, getIntents } from '@/lib/intent-store'
+import { startAuctionEngine } from '@/lib/auction-engine'
 
 
 /* ─── Types ─────────────────────────────────────────────── */
@@ -182,6 +184,7 @@ export default function IntentForm() {
 
   const [errors, setErrors] = useState<Partial<Record<keyof IntentFormData, string>>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [createdIntentId, setCreatedIntentId] = useState<string | null>(null)
 
   const update = useCallback(<K extends keyof IntentFormData>(key: K, value: IntentFormData[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }))
@@ -209,12 +212,24 @@ export default function IntentForm() {
       ev.preventDefault()
       if (!validate()) return
       setStatus('submitting')
-      // Mock simulation delay
-      await new Promise((r) => setTimeout(r, 3000))
-      // Simulate success
+      // Create real intent
+      await new Promise((r) => setTimeout(r, 1500))
+      const intent = createIntent({
+        fromChain: form.fromChain,
+        toChain: form.toChain,
+        inputToken: form.inputToken,
+        outputToken: form.outputToken,
+        amount: parseFloat(form.amount),
+        slippage: form.slippage,
+        deadline: form.deadline,
+      })
+      // Start auction
+      const auction = startAuction(intent)
+      startAuctionEngine(intent.id, auction)
+      setCreatedIntentId(intent.id)
       setStatus('success')
     },
-    [validate],
+    [validate, form],
   )
 
   const reset = useCallback(() => {
@@ -285,8 +300,13 @@ export default function IntentForm() {
                 <button type="button" onClick={reset} className="btn-primary px-6 py-2.5 text-sm flex-1">
                   Post Another Intent
                 </button>
+                {createdIntentId && (
+                  <a href={`/auction?id=${createdIntentId}`} className="btn-ghost px-6 py-2.5 text-sm flex-1 text-center">
+                    View Auction
+                  </a>
+                )}
                 <a href="/dashboard" className="btn-ghost px-6 py-2.5 text-sm flex-1 text-center">
-                  View Dashboard
+                  Dashboard
                 </a>
               </div>
             </motion.div>

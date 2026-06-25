@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { getAuction, subscribe } from '@/lib/intent-store'
 
 
 /* ─── Types ─────────────────────────────────────────────── */
@@ -73,15 +74,29 @@ function formatBidPrice(eth: number): string {
 /* ─── Main Component ────────────────────────────────────── */
 
 export default function AuctionVisualizer({
+  intentId,
   initialAuction,
 }: {
+  intentId?: string
   initialAuction?: AuctionState
 }) {
   const [auction, setAuction] = useState<AuctionState>(
     initialAuction ?? generateMockAuction(),
   )
+  const [refreshKey, setRefreshKey] = useState(0)
   const svgRef = useRef<SVGSVGElement>(null)
   const [dimensions, setDimensions] = useState({ w: 700, h: 280 })
+
+  // Sync with intent store if intentId provided
+  useEffect(() => {
+    if (!intentId) return
+    const loadAuction = () => {
+      const stored = getAuction(intentId)
+      if (stored) setAuction(stored)
+    }
+    loadAuction()
+    return subscribe(loadAuction)
+  }, [intentId])
 
   // Countdown and price decay
   useEffect(() => {

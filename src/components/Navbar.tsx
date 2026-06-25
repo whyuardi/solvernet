@@ -15,6 +15,7 @@ const navLinks: NavLink[] = [
   { label: "Explore", href: "/" },
   { label: "Dashboard", href: "/dashboard" },
   { label: "Auction", href: "/auction" },
+  { label: "Analytics", href: "/analytics" },
 ];
 
 export default function Navbar() {

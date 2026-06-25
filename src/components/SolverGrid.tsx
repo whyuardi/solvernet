@@ -2,18 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Award,
-  Star,
-  TrendingUp,
-  Shield,
-  Zap,
-  ArrowUpDown,
-  Clock,
-  Coins,
-  User,
-  Search,
-} from 'lucide-react'
+
 
 /* ─── Types ─────────────────────────────────────────────── */
 
@@ -121,13 +110,12 @@ function ReputationStars({ score }: { score: number }) {
         if (i < full) fill = 'var(--accent)'
         else if (i === full && hasHalf) fill = 'var(--accent)'
         return (
-          <Star
+          <span
             key={i}
-            size={12}
-            fill={fill === 'var(--accent)' ? 'var(--accent)' : 'none'}
-            stroke={fill === 'var(--accent)' ? 'var(--accent)' : 'var(--text-muted)'}
-            className={fill === 'var(--accent)' ? undefined : 'opacity-30'}
-          />
+            className={`text-xs ${
+              fill === 'var(--accent)' ? 'text-[var(--accent)]' : 'text-[var(--text-muted)] opacity-30'
+            }`}
+          >★</span>
         )
       })}
       <span className="text-[10px] font-mono text-[var(--text-muted)] ml-1">{score.toFixed(1)}</span>
@@ -153,10 +141,10 @@ function SolverCard({
   index: number
 }) {
   const specialtyIcon = {
-    fast: <Zap size={12} />,
-    cheap: <Coins size={12} />,
-    reliable: <Shield size={12} />,
-    whale: <TrendingUp size={12} />,
+    fast: <span className="text-xs text-[var(--accent)]">⟡</span>,
+    cheap: <span className="text-xs text-[var(--accent)]">$</span>,
+    reliable: <span className="text-xs text-[var(--accent)]">◆</span>,
+    whale: <span className="text-xs text-[var(--accent)]">↑</span>,
   }[solver.specialty]
 
   const specialtyLabel = {
@@ -244,7 +232,7 @@ function SolverCard({
             {specialtyLabel}
           </span>
           <span className="flex items-center gap-1">
-            <Clock size={10} />
+            <span className="text-xs">⏱</span>
             {solver.avgFillTime}s avg
           </span>
         </div>
@@ -259,7 +247,7 @@ function EmptyState() {
   return (
     <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
       <div className="w-16 h-16 rounded-full bg-[var(--bg-secondary)] flex items-center justify-center mb-4">
-        <Search size={28} className="text-[var(--text-muted)]" />
+        <span className="text-2xl text-[var(--text-muted)]">⟐</span>
       </div>
       <h3 className="text-lg font-semibold mb-1">No Solvers Yet</h3>
       <p className="text-sm text-[var(--text-secondary)] max-w-xs">
@@ -329,7 +317,7 @@ export default function SolverGrid() {
                   : 'border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--border-hover)]'
               }`}
             >
-              <ArrowUpDown size={10} className="inline mr-1" />
+              <span className="text-xs inline mr-1">⇅</span>
               {key === 'bid' ? 'Bid (Low)' : key === 'reputation' ? 'Reputation' : 'Speed'}
             </button>
           ))}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Network } from "lucide-react";
+
 
 interface FooterColumn {
   title: string;
@@ -47,7 +47,7 @@ export default function Footer() {
               aria-label="SolverNet Home"
             >
               <div className="flex h-7 w-7 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--accent-dim)] border border-[rgba(180,255,57,0.12)]">
-                <Network className="h-3.5 w-3.5 text-[var(--accent)]" />
+                <span className="text-sm text-[var(--accent)] font-bold">◈</span>
               </div>
               <span className="text-sm font-bold tracking-tight text-[var(--text-primary)]">
                 Solv<span className="text-[var(--accent)]">Net</span>

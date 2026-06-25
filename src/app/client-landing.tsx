@@ -2,14 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { DollarSign, Users, Globe } from 'lucide-react'
 
 interface StatsProps {
-  stats: {
-    totalValueSettled: number
-    activeSolvers: number
-    chainsSupported: number
-  }
+  totalValueSettled: number
+  activeSolvers: number
+  chainsSupported: number
 }
 
 function AnimatedCounter({
@@ -28,15 +25,19 @@ function AnimatedCounter({
 
   useEffect(() => {
     if (!inView || started.current) return
-    started.current = true
 
-    const duration = 2000
-    const steps = 60
-    const increment = end / steps
+    started.current = true
+    const duration = 1200
+    const steps = 40
+    const stepDuration = duration / steps
     let current = 0
+
     const interval = setInterval(() => {
-      current += increment
-      if (current >= end) {
+      current++
+      const progress = current / steps
+      const eased = 1 - Math.pow(1 - progress, 3)
+
+      if (current >= steps) {
         setCount(end)
         clearInterval(interval)
       } else {
@@ -58,7 +59,7 @@ function AnimatedCounter({
   )
 }
 
-export default function ClientLanding({ stats }: StatsProps) {
+export default function ClientLanding({ totalValueSettled, activeSolvers, chainsSupported }: StatsProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -68,38 +69,35 @@ export default function ClientLanding({ stats }: StatsProps) {
     >
       <div className="flex flex-1 items-center justify-center gap-6 sm:gap-10 px-4 py-4 sm:py-5">
         <div className="text-center">
-          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-1 flex items-center justify-center gap-1 font-[var(--font-mono)]">
-            <DollarSign size={10} />
+          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-1 font-[var(--font-mono)]">
             <span className="hidden sm:inline">Total Value Settled</span>
             <span className="sm:hidden">TVS</span>
           </div>
           <div className="text-lg sm:text-xl font-bold font-[var(--font-mono)] text-[var(--accent)]">
-            $<AnimatedCounter end={stats.totalValueSettled / 1_000_000} suffix="M" decimals={1} />
+            $<AnimatedCounter end={totalValueSettled / 1_000_000} suffix="M" decimals={1} />
           </div>
         </div>
 
         <div className="w-px h-8 bg-[var(--border)]" />
 
         <div className="text-center">
-          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-1 flex items-center justify-center gap-1 font-[var(--font-mono)]">
-            <Users size={10} />
+          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-1 font-[var(--font-mono)]">
             <span className="hidden sm:inline">Active Solvers</span>
             <span className="sm:hidden">Solvers</span>
           </div>
           <div className="text-lg sm:text-xl font-bold font-[var(--font-mono)]">
-            <AnimatedCounter end={stats.activeSolvers} />
+            <AnimatedCounter end={activeSolvers} />
           </div>
         </div>
 
         <div className="w-px h-8 bg-[var(--border)]" />
 
         <div className="text-center">
-          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-1 flex items-center justify-center gap-1 font-[var(--font-mono)]">
-            <Globe size={10} />
+          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-1 font-[var(--font-mono)]">
             Chains
           </div>
           <div className="text-lg sm:text-xl font-bold font-[var(--font-mono)]">
-            <AnimatedCounter end={stats.chainsSupported} />
+            <AnimatedCounter end={chainsSupported} />
           </div>
         </div>
       </div>

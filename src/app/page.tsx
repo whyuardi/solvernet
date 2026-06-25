@@ -1,36 +1,35 @@
 import IntentForm from '@/components/IntentForm'
-import { Gavel, Network, Shield, Globe, Lock, Zap, ArrowRight } from 'lucide-react'
 import ClientLanding from './client-landing'
 import ClientHero from './client-hero'
 
 const FEATURES = [
   {
-    icon: Gavel,
+    tag: 'Auction',
     title: 'Dutch Auction Engine',
     desc: 'Every intent triggers a Dutch auction. Price decays until a solver claims it, ensuring best execution.',
   },
   {
-    icon: Network,
+    tag: 'Marketplace',
     title: 'Solver Marketplace',
     desc: 'Competitive marketplace of specialized solvers bidding in real-time, driving prices down.',
   },
   {
-    icon: Shield,
+    tag: 'ZK',
     title: 'ZK-Settled',
     desc: 'Zero-knowledge proofs verify every settlement. Trustless cross-chain execution.',
   },
   {
-    icon: Globe,
+    tag: 'Chains',
     title: 'Cross-Chain Native',
     desc: 'Native bridging across 15+ chains. Post on one, settle on another.',
   },
   {
-    icon: Lock,
+    tag: 'MEV',
     title: 'MEV Protected',
     desc: 'Dutch auction design neutralizes MEV. No frontrunning, no sandwich attacks.',
   },
   {
-    icon: Zap,
+    tag: 'Gas',
     title: 'Gas Abstraction',
     desc: 'Pay fees in any token. Solvers cover gas across chains.',
   },
@@ -96,7 +95,7 @@ export default function Home() {
               <div className="flex flex-wrap items-center gap-3">
                 <a href="#intent" className="btn-primary px-6 py-3 text-sm inline-flex items-center gap-2">
                   Launch App
-                  <ArrowRight size={14} />
+                  <span className="text-xs">→</span>
                 </a>
                 <a href="#how-it-works" className="btn-ghost px-6 py-3 text-sm">
                   How It Works
@@ -108,47 +107,48 @@ export default function Home() {
             <div className="lg:col-span-5 hidden lg:block" />
           </div>
         </div>
+      </section>
 
-        {/* Stats — bottom strip */}
-        <div className="absolute bottom-0 left-0 right-0 z-10">
-          <ClientLanding stats={STATS} />
+      {/* ─── Stats Strip ─── */}
+      <section className="border-y border-[var(--border)] bg-[var(--bg-secondary)]/30">
+        <div className="max-w-7xl mx-auto">
+          <ClientLanding
+            totalValueSettled={STATS.totalValueSettled}
+            activeSolvers={STATS.activeSolvers}
+            chainsSupported={STATS.chainsSupported}
+          />
         </div>
       </section>
 
-      {/* ─── Features — Asymmetric Bento Grid ─── */}
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+      {/* ─── Features — Bento Grid ─── */}
+      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 border-t border-[var(--border)]">
         <div className="max-w-7xl mx-auto">
-          {/* Section header — left-aligned */}
           <div className="mb-14 max-w-2xl">
-            <span className="tag block mb-3">Protocol</span>
+            <span className="tag block mb-3">Features</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-[-0.02em] mb-3">
-              Built for Intent-Centric Trading
+              Built for Execution
             </h2>
             <p className="text-[var(--text-secondary)] leading-relaxed">
-              Every component is designed to give you the best execution across chains.
+              Every component is designed for one thing: getting you the best price on cross-chain swaps.
             </p>
           </div>
 
-          {/* Bento grid — 12-col asymmetric */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3">
-            {/* Dutch Auction — large 8 cols */}
-            <div className="lg:col-span-8 card card-accent p-6 sm:p-8 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)]/[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <div className="relative z-10">
-                <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-[var(--accent-dim)] flex items-center justify-center mb-4">
-                  <Gavel size={20} className="text-[var(--accent)]" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">{FEATURES[0].title}</h3>
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-lg">
-                  {FEATURES[0].desc}
-                </p>
+            {/* Dutch Auction Engine — 8 cols */}
+            <div className="lg:col-span-8 card p-6">
+              <div className="inline-flex items-center gap-1.5 mb-3 px-2 py-0.5 rounded-full bg-[var(--accent-dim)] text-[var(--accent)] text-[10px] font-medium uppercase tracking-wider">
+                {FEATURES[0].tag}
               </div>
+              <h3 className="text-xl font-bold mb-2">{FEATURES[0].title}</h3>
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-lg">
+                {FEATURES[0].desc}
+              </p>
             </div>
 
             {/* Solver Marketplace — tall 4 cols, 2 rows */}
             <div className="lg:col-span-4 lg:row-span-2 card p-6 flex flex-col">
-              <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--bg-secondary)] border border-[var(--border)] flex items-center justify-center mb-3">
-                <Network size={16} className="text-[var(--text-secondary)]" />
+              <div className="inline-flex items-center gap-1.5 mb-3 px-2 py-0.5 rounded-full bg-[var(--accent-dim)] text-[var(--accent)] text-[10px] font-medium uppercase tracking-wider">
+                {FEATURES[1].tag}
               </div>
               <h3 className="text-base font-bold mb-1.5">{FEATURES[1].title}</h3>
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed flex-1">{FEATURES[1].desc}</p>
@@ -156,8 +156,8 @@ export default function Home() {
 
             {/* ZK-Settled — 4 cols */}
             <div className="lg:col-span-4 card p-5">
-              <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--bg-secondary)] border border-[var(--border)] flex items-center justify-center mb-3">
-                <Shield size={16} className="text-[var(--text-secondary)]" />
+              <div className="inline-flex items-center gap-1.5 mb-2 px-2 py-0.5 rounded-full bg-[var(--accent-dim)] text-[var(--accent)] text-[10px] font-medium uppercase tracking-wider">
+                {FEATURES[2].tag}
               </div>
               <h3 className="text-sm font-bold mb-1">{FEATURES[2].title}</h3>
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{FEATURES[2].desc}</p>
@@ -166,10 +166,10 @@ export default function Home() {
             {/* Cross-Chain — 7 cols */}
             <div className="lg:col-span-7 card p-5">
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--bg-secondary)] border border-[var(--border)] flex items-center justify-center shrink-0">
-                  <Globe size={16} className="text-[var(--text-secondary)]" />
-                </div>
                 <div>
+                  <div className="inline-flex items-center gap-1.5 mb-2 px-2 py-0.5 rounded-full bg-[var(--accent-dim)] text-[var(--accent)] text-[10px] font-medium uppercase tracking-wider">
+                    {FEATURES[3].tag}
+                  </div>
                   <h3 className="text-sm font-bold mb-1">{FEATURES[3].title}</h3>
                   <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{FEATURES[3].desc}</p>
                 </div>
@@ -179,10 +179,10 @@ export default function Home() {
             {/* MEV Protected — 5 cols */}
             <div className="lg:col-span-5 card p-5">
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--bg-secondary)] border border-[var(--border)] flex items-center justify-center shrink-0">
-                  <Lock size={16} className="text-[var(--text-secondary)]" />
-                </div>
                 <div>
+                  <div className="inline-flex items-center gap-1.5 mb-2 px-2 py-0.5 rounded-full bg-[var(--accent-dim)] text-[var(--accent)] text-[10px] font-medium uppercase tracking-wider">
+                    {FEATURES[4].tag}
+                  </div>
                   <h3 className="text-sm font-bold mb-1">{FEATURES[4].title}</h3>
                   <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{FEATURES[4].desc}</p>
                 </div>
@@ -193,8 +193,8 @@ export default function Home() {
             <div className="sm:col-span-2 lg:col-span-12 card card-accent p-5 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-[var(--accent)]/[0.03] rounded-full blur-3xl" />
               <div className="relative z-10 flex items-center gap-4">
-                <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--accent-dim)] flex items-center justify-center shrink-0">
-                  <Zap size={16} className="text-[var(--accent)]" />
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[var(--accent-dim)] text-[var(--accent)] text-[10px] font-medium uppercase tracking-wider shrink-0">
+                  {FEATURES[5].tag}
                 </div>
                 <div>
                   <h3 className="text-sm font-bold mb-0.5">{FEATURES[5].title}</h3>
@@ -220,32 +220,16 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Steps — large numbers, editorial layout */}
-          <div className="space-y-0">
-            {HOW_IT_WORKS.map((step, i) => (
-              <div
-                key={step.step}
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 border-t border-[var(--border)] items-start"
-              >
-                {/* Step number — huge monospace */}
-                <div className={`md:col-span-2 ${i % 2 !== 0 ? 'md:order-last md:text-right' : ''}`}>
-                  <span className="text-5xl sm:text-6xl font-bold text-[var(--accent)] opacity-20 font-[var(--font-mono)] leading-none">
-                    {step.step}
-                  </span>
+          {/* Steps — editorial numbering layout */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+            {HOW_IT_WORKS.map((item) => (
+              <div key={item.step} className="relative">
+                <div className="text-[6rem] sm:text-[8rem] font-bold text-[var(--border)] leading-none select-none -mb-8 md:-mb-12">
+                  {item.step}
                 </div>
-
-                {/* Title */}
-                <div className={`md:col-span-3 ${i % 2 !== 0 ? 'md:order-3' : ''}`}>
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight">
-                    {step.title}
-                  </h3>
-                </div>
-
-                {/* Description */}
-                <div className={`md:col-span-7 ${i % 2 !== 0 ? 'md:order-2' : ''}`}>
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-lg">
-                    {step.desc}
-                  </p>
+                <div className="relative z-10">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2">{item.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -253,67 +237,46 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Intent Form Section ─── */}
+      {/* ─── Intent Form ─── */}
       <section id="intent" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 border-t border-[var(--border)]">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-            {/* Left — heading + info */}
-            <div className="lg:col-span-4 lg:sticky lg:top-24">
-              <span className="tag block mb-3">Interface</span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-[-0.02em] mb-3">
-                Create an Intent
-              </h2>
-              <p className="text-[var(--text-secondary)] leading-relaxed mb-8">
-                Define your cross-chain intent and let solvers compete for it.
-              </p>
-
-              {/* Side info */}
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-1 h-1 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
-                  <div>
-                    <p className="text-sm font-medium mb-0.5">Zero bridge required</p>
-                    <p className="text-xs text-[var(--text-secondary)]">Post intents without pre-funding. Solvers handle bridging.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-1 h-1 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
-                  <div>
-                    <p className="text-sm font-medium mb-0.5">MEV-resistant by design</p>
-                    <p className="text-xs text-[var(--text-secondary)]">Dutch auction mechanics eliminate frontrunning.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-1 h-1 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
-                  <div>
-                    <p className="text-sm font-medium mb-0.5">Best execution guaranteed</p>
-                    <p className="text-xs text-[var(--text-secondary)]">Competitive solver bids drive optimal pricing.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right — form */}
-            <div className="lg:col-span-8">
-              <IntentForm />
-            </div>
+          <div className="mb-14 max-w-2xl">
+            <span className="tag block mb-3">Intent</span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-[-0.02em] mb-3">
+              Post an Intent
+            </h2>
+            <p className="text-[var(--text-secondary)] leading-relaxed">
+              Describe your swap. Solvers compete to fill it at the best price.
+            </p>
           </div>
+          <IntentForm />
         </div>
       </section>
 
-      {/* ─── CTA — Minimal, editorial ─── */}
+      {/* ─── CTA ─── */}
       <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 border-t border-[var(--border)]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-[-0.03em] mb-4">
-            Ready to Settle Across Chains?
-          </h2>
-          <p className="text-[var(--text-secondary)] max-w-md mx-auto mb-8 leading-relaxed">
-            Post your first intent and let solvers compete for your trade.
-          </p>
-          <a href="#intent" className="btn-primary px-8 py-3.5 text-sm inline-flex items-center gap-2">
-            Get Started
-            <ArrowRight size={14} />
-          </a>
+        <div className="max-w-7xl mx-auto">
+          <div className="card-accent p-8 sm:p-12 text-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)]/[0.05] rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-[var(--accent)]/[0.03] rounded-full blur-3xl" />
+            <div className="relative z-10">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-[-0.02em] mb-4">
+                Ready to Get the Best Price?
+              </h2>
+              <p className="text-[var(--text-secondary)] mb-8 max-w-md mx-auto">
+                Join the solver network. Post your first intent and experience competitive cross-chain execution.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <a href="#intent" className="btn-primary px-8 py-3 text-sm inline-flex items-center gap-2">
+                  Start Now
+                  <span className="text-xs">→</span>
+                </a>
+                <a href="/dashboard" className="btn-ghost px-8 py-3 text-sm">
+                  View Dashboard
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>

@@ -2,19 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import {
-  Activity,
-  Clock,
-  DollarSign,
-  Users,
-  Filter,
-  ArrowUpRight,
-  ArrowDownRight,
-  CheckCircle2,
-  Timer,
-  Gauge,
-  Layers,
-} from 'lucide-react'
+
 import SolverGrid from '@/components/SolverGrid'
 
 /* ─── Types ─────────────────────────────────────────────── */
@@ -51,38 +39,38 @@ interface Transaction {
 /* ─── Mock Data ─────────────────────────────────────────── */
 
 const STATS_CARDS = [
-  {
-    label: 'Active Intents',
-    value: '24',
-    change: '+12%',
-    up: true,
-    icon: Layers,
-    color: 'var(--accent)',
-  },
-  {
-    label: 'Avg Fill Time',
-    value: '12s',
-    change: '-18%',
-    up: true,
-    icon: Timer,
-    color: 'var(--success)',
-  },
-  {
-    label: 'Best Spread',
-    value: '0.08%',
-    change: '-3bps',
-    up: true,
-    icon: Gauge,
-    color: 'var(--success)',
-  },
-  {
-    label: 'Solver Count',
-    value: '47',
-    change: '+5',
-    up: true,
-    icon: Users,
-    color: 'var(--accent)',
-  },
+ {
+   label: 'Active Intents',
+   value: '24',
+   change: '+12%',
+   up: true,
+    icon: '⟐',
+   color: 'var(--accent)',
+ },
+ {
+   label: 'Avg Fill Time',
+   value: '12s',
+   change: '-18%',
+   up: true,
+    icon: '⏱',
+   color: 'var(--success)',
+ },
+ {
+   label: 'Best Spread',
+   value: '0.08%',
+   change: '-3bps',
+   up: true,
+    icon: '⟡',
+   color: 'var(--success)',
+ },
+ {
+   label: 'Solver Count',
+   value: '47',
+   change: '+5',
+   up: true,
+    icon: '✦',
+   color: 'var(--accent)',
+ },
 ]
 
 const RECENT_INTENTS: Intent[] = [
@@ -153,7 +141,7 @@ export default function DashboardPage() {
             </span>
           </div>
           <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] shrink-0">
-            <Activity size={12} className="text-[var(--success)]" />
+            <span className="text-xs text-[var(--success)]">⟐</span>
             <span className="hidden sm:inline">All systems operational</span>
             <span className="sm:hidden">OK</span>
           </div>
@@ -175,7 +163,7 @@ export default function DashboardPage() {
                 <span className="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">
                   {stat.label}
                 </span>
-                <stat.icon size={14} style={{ color: stat.color }} />
+                <span className="text-sm" style={{ color: stat.color }}>{stat.icon}</span>
               </div>
               <div className="flex items-end justify-between">
                 <span className="text-2xl font-bold font-mono">{stat.value}</span>
@@ -184,7 +172,7 @@ export default function DashboardPage() {
                     stat.up ? 'text-[var(--success)]' : 'text-[var(--error)]'
                   }`}
                 >
-                  {stat.up ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+                  <span className="text-xs">{stat.up ? '↑' : '↓'}</span>
                   {stat.change}
                 </span>
               </div>
@@ -194,7 +182,7 @@ export default function DashboardPage() {
 
         {/* ── Filters ── */}
         <div className="flex flex-wrap items-center gap-2 overflow-x-auto">
-          <Filter size={14} className="text-[var(--text-muted)]" />
+          <span className="text-sm text-[var(--text-muted)]">⟐</span>
           <select
             value={chainFilter}
             onChange={(e) => setChainFilter(e.target.value as ChainId)}
@@ -237,7 +225,7 @@ export default function DashboardPage() {
           {/* Left: Live Activity Feed */}
           <div className="lg:col-span-2">
             <h2 className="text-sm sm:text-base font-semibold mb-3 flex items-center gap-2">
-              <Activity size={14} className="text-[var(--accent)]" />
+              <span className="text-sm text-[var(--accent)]">⟐</span>
               Live Activity
             </h2>
             <div className="space-y-1.5">
@@ -285,7 +273,7 @@ export default function DashboardPage() {
           {/* Right: Top Solvers Leaderboard */}
           <div>
             <h2 className="text-sm sm:text-base font-semibold mb-3 flex items-center gap-2">
-              <Users size={14} className="text-[var(--accent)]" />
+              <span className="text-sm text-[var(--accent)]">✦</span>
               Top Solvers
             </h2>
             <div className="glass-card overflow-hidden">
@@ -325,7 +313,7 @@ export default function DashboardPage() {
         {/* ── Recent Transactions ── */}
         <div>
           <h2 className="text-sm sm:text-base font-semibold mb-3 flex items-center gap-2">
-            <CheckCircle2 size={14} className="text-[var(--success)]" />
+            <span className="text-sm text-[var(--success)]">✓</span>
             Recent Transactions
           </h2>
           <div className="glass-card overflow-hidden">

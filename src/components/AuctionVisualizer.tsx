@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { TrendingDown, Clock, DollarSign, Users } from 'lucide-react'
+
 
 /* ─── Types ─────────────────────────────────────────────── */
 
@@ -195,7 +195,7 @@ export default function AuctionVisualizer({
       <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
         <div>
           <h3 className="text-base font-semibold flex items-center gap-2">
-            <TrendingDown size={16} className="text-[var(--accent)]" />
+            <span className="text-sm text-[var(--accent)]">↓</span>
             Dutch Auction
           </h3>
           <p className="text-xs text-[var(--text-secondary)] mt-0.5">
@@ -213,7 +213,7 @@ export default function AuctionVisualizer({
           </div>
           <div className="text-right">
             <div className="text-[9px] uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1">
-              <Clock size={10} />
+              <span className="text-xs">⏱</span>
               Remaining
             </div>
             <div className="text-lg font-semibold font-mono">
@@ -349,7 +349,7 @@ export default function AuctionVisualizer({
       {/* Bid History List */}
       <div>
         <h4 className="text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-          <Users size={12} />
+          <span className="text-xs">✦</span>
           Bid History ({bidHistory.length})
         </h4>
         {bidHistory.length === 0 ? (

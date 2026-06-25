@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Network, Menu, X, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavLink {
@@ -40,6 +39,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [wallet, setWallet] = useState<{ address: string; balance: string } | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -58,6 +58,22 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
+  const connectWallet = () => {
+    // Mock MetaMask-style connection
+    setWallet({
+      address: `0x71f4${Math.random().toString(16).slice(2, 8)}a3b2`,
+      balance: `${(Math.random() * 5 + 0.5).toFixed(2)} ETH`,
+    });
+  };
+
+  const disconnectWallet = () => {
+    setWallet(null);
+  };
+
+  const shortAddress = wallet
+    ? `${wallet.address.slice(0, 6)}...${wallet.address.slice(-4)}`
+    : "";
+
   return (
     <header
       className={cn(
@@ -75,7 +91,7 @@ export default function Navbar() {
           aria-label="SolverNet Home"
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--accent-dim)] border border-[rgba(180,255,57,0.12)] transition-colors group-hover:border-[rgba(180,255,57,0.3)]">
-            <Network className="h-4 w-4 text-[var(--accent)]" />
+            <span className="text-sm text-[var(--accent)] font-bold">◈</span>
           </div>
           <span className="text-base font-bold tracking-tight text-white">
             Solv<span className="text-[var(--accent)]">Net</span>
@@ -113,14 +129,30 @@ export default function Navbar() {
 
         {/* Right */}
         <div className="flex items-center gap-3">
-          <button
-            disabled
-            className="hidden h-8 items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--border)] bg-transparent px-3 text-xs font-medium text-[var(--text-secondary)] cursor-not-allowed opacity-50 sm:flex"
-            aria-label="Connect Wallet"
-          >
-            <Wallet className="h-3.5 w-3.5" />
-            <span>Connect Wallet</span>
-          </button>
+          {wallet ? (
+            <div className="hidden items-center gap-2 sm:flex">
+              <span className="text-[10px] text-[var(--text-muted)] tracking-tight">
+                {wallet.balance}
+              </span>
+              <button
+                onClick={disconnectWallet}
+                className="flex h-8 items-center gap-1.5 rounded-[var(--radius-sm)] border border-[var(--border)] bg-transparent px-2.5 text-[11px] font-medium text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] transition-colors"
+                aria-label="Disconnect Wallet"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)]" />
+                <span>{shortAddress}</span>
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={connectWallet}
+              className="hidden h-8 items-center gap-1.5 rounded-[var(--radius-sm)] border border-[var(--accent-dim)] bg-[var(--accent-dim)]/50 px-3 text-xs font-medium text-[var(--accent)] hover:bg-[var(--accent-dim)] transition-colors sm:flex"
+              aria-label="Connect Wallet"
+            >
+              <span className="text-xs">⬡</span>
+              <span>Connect</span>
+            </button>
+          )}
 
           {/* Mobile Toggle */}
           <button
@@ -128,7 +160,7 @@ export default function Navbar() {
             className="relative z-50 flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] md:hidden"
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
-            {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {isOpen ? <span className="text-lg">✕</span> : <span className="text-lg">☰</span>}
           </button>
         </div>
       </nav>
@@ -189,13 +221,31 @@ export default function Navbar() {
                   variants={mobileItemVariants}
                   className="mt-4 border-t border-[var(--border)] pt-4"
                 >
-                  <button
-                    disabled
-                    className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--border)] bg-transparent px-3 py-2.5 text-sm font-medium text-[var(--text-secondary)] cursor-not-allowed opacity-50"
-                  >
-                    <Wallet className="h-4 w-4" />
-                    <span>Connect Wallet</span>
-                  </button>
+                  {wallet ? (
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--border)] px-3 py-2 text-sm text-[var(--text-secondary)]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)]" />
+                        <span className="font-mono text-xs">{shortAddress}</span>
+                      </div>
+                      <span className="text-[11px] text-[var(--text-muted)] px-1">
+                        {wallet.balance}
+                      </span>
+                      <button
+                        onClick={disconnectWallet}
+                        className="flex w-full items-center justify-center gap-2 rounded-[var(--radius-sm)] border border-[var(--border)] bg-transparent px-3 py-2.5 text-xs font-medium text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                      >
+                        Disconnect
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={connectWallet}
+                      className="flex w-full items-center justify-center gap-2 rounded-[var(--radius-sm)] border border-[var(--accent-dim)] bg-[var(--accent-dim)]/50 px-3 py-2.5 text-sm font-medium text-[var(--accent)] hover:bg-[var(--accent-dim)] transition-colors"
+                    >
+                      <span className="text-sm">⬡</span>
+                      <span>Connect Wallet</span>
+                    </button>
+                  )}
                 </motion.div>
               </div>
             </motion.div>

@@ -2,17 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import {
-  ArrowLeftRight,
-  Clock,
-  DollarSign,
-  Users,
-  TrendingDown,
-  ArrowUpRight,
-  Globe,
-  Zap,
-  AlertCircle,
-} from 'lucide-react'
+
 import AuctionVisualizer from '@/components/AuctionVisualizer'
 
 /* ─── Types ─────────────────────────────────────────────── */
@@ -121,7 +111,7 @@ export default function AuctionPage() {
                     From
                   </div>
                   <div className="flex items-center gap-1.5 text-sm font-medium">
-                    <Globe size={12} className="text-[var(--accent)]" />
+                    <span className="text-xs text-[var(--accent)]">⟐</span>
                     {INTENT_DETAILS.fromChain}
                   </div>
                 </div>
@@ -130,7 +120,7 @@ export default function AuctionPage() {
                     To
                   </div>
                   <div className="flex items-center gap-1.5 text-sm font-medium">
-                    <ArrowUpRight size={12} className="text-[var(--accent)]" />
+                    <span className="text-xs text-[var(--accent)]">→</span>
                     {INTENT_DETAILS.toChain}
                   </div>
                 </div>
@@ -154,14 +144,14 @@ export default function AuctionPage() {
 
               <div className="flex flex-wrap items-center justify-between mt-4 pt-4 border-t border-[var(--border)] gap-3">
                 <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] shrink-0">
-                  <Clock size={12} />
+                  <span className="text-xs">⏱</span>
                   <span>Deadline: </span>
                   <span className="font-mono text-[var(--text-primary)]">
                     {formatTime(timeRemaining)}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] shrink-0">
-                  <Zap size={12} />
+                  <span className="text-xs">⟡</span>
                   <span>Output: </span>
                   <span className="font-mono text-[var(--text-primary)]">
                     {INTENT_DETAILS.outputToken}
@@ -179,7 +169,7 @@ export default function AuctionPage() {
             {/* Active Bidding */}
             <div className="glass-card p-5">
               <h2 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                <TrendingDown size={14} className="text-[var(--accent)]" />
+                <span className="text-sm text-[var(--accent)]">↓</span>
                 Active Bids
                 <span className="text-[10px] font-normal text-[var(--text-muted)]">
                   ({BIDS.length} solvers)
@@ -249,7 +239,7 @@ export default function AuctionPage() {
             {/* Bid History Log */}
             <div className="glass-card p-5">
               <h2 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                <Clock size={14} className="text-[var(--text-muted)]" />
+                <span className="text-sm text-[var(--text-muted)]">⏱</span>
                 Bid History
               </h2>
 
@@ -280,7 +270,7 @@ export default function AuctionPage() {
             {/* Auction Info */}
             <div className="glass-card p-4">
               <div className="flex items-start gap-3">
-                <AlertCircle size={14} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                <span className="text-sm text-[var(--accent)] shrink-0 mt-0.5">!</span>
                 <div>
                   <h3 className="text-xs font-semibold mb-1">Dutch Auction Active</h3>
                   <p className="text-[10px] text-[var(--text-secondary)] leading-relaxed">

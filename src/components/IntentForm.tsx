@@ -2,16 +2,7 @@
 
 import { useState, useCallback, FormEvent } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  ArrowLeftRight,
-  ChevronDown,
-  Check,
-  Clock,
-  Gauge,
-  Loader2,
-  Sparkles,
-  AlertCircle,
-} from 'lucide-react'
+
 
 /* ─── Types ─────────────────────────────────────────────── */
 
@@ -104,10 +95,7 @@ function Selector<T extends string>({
         <span className="flex items-center gap-2">
           {renderOption ? renderOption(value) : value}
         </span>
-        <ChevronDown
-          size={14}
-          className={`text-[var(--text-muted)] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-        />
+        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--text-muted)] pointer-events-none text-xs">▾</span>
       </button>
       <AnimatePresence>
         {open && (
@@ -136,7 +124,7 @@ function Selector<T extends string>({
                 <span className="flex items-center gap-2">
                   {renderOption ? renderOption(opt.value) : opt.label}
                 </span>
-                {opt.value === value && <Check size={14} />}
+                {opt.value === value && <span className="text-xs">✓</span>}
               </button>
             ))}
           </motion.div>
@@ -194,7 +182,6 @@ export default function IntentForm() {
 
   const [errors, setErrors] = useState<Partial<Record<keyof IntentFormData, string>>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
-  const [intentId, setIntentId] = useState<string>('')
 
   const update = useCallback(<K extends keyof IntentFormData>(key: K, value: IntentFormData[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }))
@@ -221,14 +208,10 @@ export default function IntentForm() {
     async (ev: FormEvent) => {
       ev.preventDefault()
       if (!validate()) return
-
       setStatus('submitting')
       // Mock simulation delay
       await new Promise((r) => setTimeout(r, 3000))
-
       // Simulate success
-      const id = `sn-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`
-      setIntentId(id)
       setStatus('success')
     },
     [validate],
@@ -236,7 +219,6 @@ export default function IntentForm() {
 
   const reset = useCallback(() => {
     setStatus('idle')
-    setIntentId('')
     setForm({
       fromChain: 'ethereum',
       toChain: 'arbitrum',
@@ -270,41 +252,43 @@ export default function IntentForm() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="flex flex-col items-center py-8 text-center"
+              className="py-8"
             >
-              <div className="w-14 h-14 rounded-full bg-[var(--success)]/20 flex items-center justify-center mb-4">
-                <Sparkles size={28} className="text-[var(--success)]" />
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-[var(--success)] text-lg font-bold">✓</span>
+                <h3 className="text-lg font-semibold text-[var(--success)]">Intent Posted Successfully</h3>
               </div>
-              <h3 className="text-xl font-semibold mb-1">Intent Posted</h3>
-              <p className="text-sm text-[var(--text-secondary)] mb-4">
-                Solvers are now competing for your order
+              <p className="text-sm text-[var(--text-secondary)] mb-6">
+                Solvers are now competing to fill your {form.amount} {form.inputToken} → {form.outputToken} order across {CHAINS.find((c) => c.id === form.fromChain)?.name} → {CHAINS.find((c) => c.id === form.toChain)?.name}
               </p>
-              <div className="card px-4 py-2.5 mb-6 text-sm font-mono text-[var(--accent)]">
-                {intentId}
-              </div>
-              <div className="grid grid-cols-2 gap-3 w-full mb-6 text-left">
-                <div className="bg-[var(--bg-secondary)] rounded-[var(--radius-sm)] p-3">
-                  <div className="text-[10px] uppercase tracking-wider text-[var(--text-muted)] mb-0.5">From</div>
-                  <div className="text-sm font-medium">{CHAINS.find((c) => c.id === form.fromChain)?.name}</div>
-                </div>
-                <div className="bg-[var(--bg-secondary)] rounded-[var(--radius-sm)] p-3">
-                  <div className="text-[10px] uppercase tracking-wider text-[var(--text-muted)] mb-0.5">To</div>
-                  <div className="text-sm font-medium">{CHAINS.find((c) => c.id === form.toChain)?.name}</div>
-                </div>
-                <div className="bg-[var(--bg-secondary)] rounded-[var(--radius-sm)] p-3">
-                  <div className="text-[10px] uppercase tracking-wider text-[var(--text-muted)] mb-0.5">Send</div>
-                  <div className="text-sm font-medium">
-                    {form.amount} {form.inputToken}
+              <div className="bg-[var(--bg-secondary)] rounded-[var(--radius-sm)] p-4 mb-6">
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="text-[var(--text-muted)] text-xs block mb-1">Route</span>
+                    <span className="font-medium">{CHAINS.find((c) => c.id === form.fromChain)?.name} → {CHAINS.find((c) => c.id === form.toChain)?.name}</span>
+                  </div>
+                  <div>
+                    <span className="text-[var(--text-muted)] text-xs block mb-1">Amount</span>
+                    <span className="font-medium font-mono">{form.amount} {form.inputToken}</span>
+                  </div>
+                  <div>
+                    <span className="text-[var(--text-muted)] text-xs block mb-1">Slippage</span>
+                    <span className="font-medium font-mono">{form.slippage}%</span>
+                  </div>
+                  <div>
+                    <span className="text-[var(--text-muted)] text-xs block mb-1">Deadline</span>
+                    <span className="font-medium">{form.deadline} minutes</span>
                   </div>
                 </div>
-                <div className="bg-[var(--bg-secondary)] rounded-[var(--radius-sm)] p-3">
-                  <div className="text-[10px] uppercase tracking-wider text-[var(--text-muted)] mb-0.5">Receive</div>
-                  <div className="text-sm font-medium">{form.outputToken}</div>
-                </div>
               </div>
-              <button type="button" onClick={reset} className="btn-primary px-6 py-2.5 text-sm">
-                Create Another
-              </button>
+              <div className="flex gap-3">
+                <button type="button" onClick={reset} className="btn-primary px-6 py-2.5 text-sm flex-1">
+                  Post Another Intent
+                </button>
+                <a href="/dashboard" className="btn-ghost px-6 py-2.5 text-sm flex-1 text-center">
+                  View Dashboard
+                </a>
+              </div>
             </motion.div>
           ) : (
             /* ── Form ── */
@@ -331,7 +315,7 @@ export default function IntentForm() {
                     className="mb-0.5 p-1.5 sm:p-2 rounded-full bg-[var(--bg-secondary)] border border-[var(--border)] hover:border-[var(--accent)] transition-colors cursor-pointer"
                     title="Swap chains"
                   >
-                    <ArrowLeftRight size={12} className="text-[var(--text-secondary)] sm:!size-[14px]" />
+                    <span className="text-sm">⇄</span>
                   </button>
                   <Selector<ChainId>
                     label="To Chain"
@@ -347,7 +331,7 @@ export default function IntentForm() {
                 </div>
                 {errors.toChain && (
                   <p className="text-xs text-[var(--error)] mt-1.5 flex items-center gap-1">
-                    <AlertCircle size={12} />
+                    <span className="text-xs">!</span>
                     {errors.toChain}
                   </p>
                 )}
@@ -401,7 +385,7 @@ export default function IntentForm() {
                 </div>
                 {errors.amount && (
                   <p className="text-xs text-[var(--error)] mt-1.5 flex items-center gap-1">
-                    <AlertCircle size={12} />
+                    <span className="text-xs">!</span>
                     {errors.amount}
                   </p>
                 )}
@@ -411,7 +395,7 @@ export default function IntentForm() {
               <div className="mb-5">
                 <div className="flex items-center justify-between mb-2">
                   <label className="text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
-                    <Gauge size={12} />
+                    <span className="text-xs">⟡</span>
                     Slippage Tolerance
                   </label>
                   <span className="text-sm font-mono text-[var(--accent)]">{form.slippage.toFixed(1)}%</span>
@@ -440,7 +424,7 @@ export default function IntentForm() {
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-2">
                   <label className="text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
-                    <Clock size={12} />
+                    <span className="text-xs">⏱</span>
                     Deadline
                   </label>
                 </div>
@@ -470,12 +454,12 @@ export default function IntentForm() {
               >
                 {status === 'submitting' ? (
                   <>
-                    <Loader2 size={16} className="animate-spin" />
+                    <span className="text-sm animate-spin inline-block">⟳</span>
                     Simulating Auction...
                   </>
                 ) : (
                   <>
-                    <Sparkles size={16} />
+                    <span className="text-sm">✦</span>
                     Post Intent
                   </>
                 )}
